@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prospect Park Audio Tour</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #000;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .map-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .map-image {
+        width: auto;
+        height: 80%;
+        max-width: 100%;
+        object-fit: contain;
+        display: block;
+        border-radius: 20px;
+      }
+
+      .spot {
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.7);
+        border: 2px solid rgba(255, 255, 255, 0.9);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: bold;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+        opacity: 0.85;
+        text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+      }
+
+      .spot:hover {
+        transform: scale(1.4);
+        background: rgba(255, 255, 255, 0.9);
+        color: #000;
+        opacity: 1;
+        z-index: 100;
+        text-shadow: none;
+      }
+
+      .spot-tooltip {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.95);
+        color: #fff;
+        padding: 8px 14px;
+        border-radius: 5px;
+        font-size: 9px;
+        line-height: 1.4;
+        min-width: 350px;
+        max-width: 450px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 1000;
+        left: 50%;
+        top: -8px;
+        transform: translate(-50%, -100%);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        font-family: Arial, sans-serif;
+        white-space: normal;
+      }
+
+      .spot-tooltip::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid rgba(0, 0, 0, 0.95);
+      }
+
+      .spot:hover .spot-tooltip {
+        opacity: 1;
+      }
+
+      .spot-tooltip-title {
+        font-weight: bold;
+        font-size: 10px;
+        margin-bottom: 4px;
+        color: #fff;
+      }
+
+      /* Responsive adjustments */
+      @media (min-width: 768px) {
+        .spot {
+          width: 32px;
+          height: 32px;
+          font-size: 15px;
+        }
+
+        .spot-tooltip {
+          font-size: 10px;
+          padding: 9px 15px;
+          min-width: 380px;
+          max-width: 480px;
+        }
+
+        .spot-tooltip-title {
+          font-size: 11px;
+        }
+      }
+
+      @media (min-width: 1200px) {
+        .spot {
+          width: 36px;
+          height: 36px;
+          font-size: 16px;
+        }
+
+        .spot-tooltip {
+          font-size: 11px;
+          padding: 10px 16px;
+          min-width: 400px;
+          max-width: 500px;
+        }
+
+        .spot-tooltip-title {
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="map-container">
+      <img src="Map.png" alt="Prospect Park Map" class="map-image" />
+
+      <!-- Spot 1: Park Entrance -->
+      <div class="spot" data-spot="1" style="top: 60%; left: 62%">
+        1
+        <div class="spot-tooltip">
+          <div class="spot-tooltip-title">Spot 1 — Park Entrance</div>
+          At the entrance to the park, the most immediately noticeable sound was
+          the crunch of footsteps on snow.
+        </div>
+      </div>
+
+      <!-- Spot 2: Wooded Path -->
+      <div class="spot" data-spot="2" style="top: 65%; left: 58%">
+        2
+        <div class="spot-tooltip">
+          <div class="spot-tooltip-title">Spot 2 — Wooded Path</div>
+          Along the wooded path, wind brushing against branches produced brief,
+          intermittent sounds.
+        </div>
+      </div>
+
+      <!-- Spot 3: Bridge Crossing -->
+      <div class="spot" data-spot="3" style="top: 62%; left: 44%">
+        3
+        <div class="spot-tooltip">
+          <div class="spot-tooltip-title">Spot 3 — Bridge Crossing</div>
+          On the bridge, the sound of water rising from below filled the space
+          more prominently than footsteps.
+        </div>
+      </div>
+
+      <!-- Spot 4: Waterfall Area -->
+      <div class="spot" data-spot="4" style="top: 50%; left: 42%">
+        4
+        <div class="spot-tooltip">
+          <div class="spot-tooltip-title">Spot 4 — Waterfall Area</div>
+          Near the waterfall, a single sound occupied the entire space. The
+          steady rhythm of falling water overwhelmed other sounds.
+        </div>
+      </div>
+
+      <!-- Spot 5: Tunnel Passage -->
+      <div class="spot" data-spot="5" style="top: 30%; left: 53%">
+        5
+        <div class="spot-tooltip">
+          <div class="spot-tooltip-title">Spot 5 — Tunnel Passage</div>
+          Inside the tunnel, wind noise intensified and revealed the form of the
+          space.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /*
+       * ============================================
+       * 오디오 파일 업로드 가이드
+       * ============================================
+       *
+       * 아래 customAudioFiles 객체에 각 스팟의 오디오 파일 경로를 지정하세요.
+       *
+       * 예시:
+       * const customAudioFiles = {
+       *     1: 'audio/spot1.mp3',
+       *     2: 'audio/spot2.mp3',
+       *     3: 'audio/spot3.mp3',
+       *     4: 'audio/spot4.mp3',
+       *     5: 'audio/spot5.mp3'
+       * };
+       *
+       * 또는 null로 두면 해당 스팟에서 오디오가 재생되지 않습니다.
+       */
+
+      const customAudioFiles = {
+        1: "audio/spot1.wav",
+        2: "audio/spot2.m4a",
+        3: "audio/spot3.wav",
+        4: "audio/spot4.wav",
+        5: "audio/spot5.m4a",
+      };
+
+      // ============================================
+      // 이 아래 코드는 수정하지 마세요
+      // ============================================
+
+      let audioObjects = {};
+      let currentAudio = null;
+      let hoverTimeout = null;
+
+      // Initialize audio objects
+      function initAudio() {
+        for (let spotNum in customAudioFiles) {
+          if (customAudioFiles[spotNum]) {
+            audioObjects[spotNum] = new Audio(customAudioFiles[spotNum]);
+            audioObjects[spotNum].preload = "auto";
+          }
+        }
+      }
+
+      // Play audio for a spot
+      function playSpotAudio(spotNum) {
+        // Stop any currently playing audio
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+        }
+
+        // Play audio if available
+        if (audioObjects[spotNum]) {
+          currentAudio = audioObjects[spotNum];
+          currentAudio.currentTime = 0;
+          currentAudio
+            .play()
+            .catch((e) => console.log("Audio play failed:", e));
+        }
+      }
+
+      // Stop audio
+      function stopSpotAudio() {
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+        }
+      }
+
+      // Event listeners for spot markers
+      document.querySelectorAll(".spot").forEach((spot) => {
+        const spotNum = parseInt(spot.dataset.spot);
+
+        // Hover events
+        spot.addEventListener("mouseenter", function () {
+          // Clear any existing timeout
+          if (hoverTimeout) {
+            clearTimeout(hoverTimeout);
+          }
+
+          // Play audio after a short delay
+          hoverTimeout = setTimeout(() => {
+            playSpotAudio(spotNum);
+          }, 200);
+        });
+
+        spot.addEventListener("mouseleave", function () {
+          // Clear timeout if mouse leaves before audio starts
+          if (hoverTimeout) {
+            clearTimeout(hoverTimeout);
+          }
+
+          stopSpotAudio();
+        });
+      });
+
+      // Initialize on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        initAudio();
+        console.log("Audio tour initialized");
+      });
+    </script>
+  </body>
+</html>
